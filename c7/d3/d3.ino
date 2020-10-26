@@ -73,19 +73,26 @@ void loop() {
   if(buttonState){
     Serial.println("button pressed...");
     if(mode == 0){
+      for(int i = 11; i <= 13; i++)
+        digitalWrite(10 + i, 0);
+      delay(100);
       digitalWrite(LED1F, 0);
+      digitalWrite(LED3F, 0);
       firstFloor = meansure();
       Serial.print("firstFloor = ");
       Serial.println(firstFloor);
     }
     else if(mode == 1){
+      for(int i = 11; i <= 13; i++)
+        digitalWrite(10 + i, 0);
+      delay(100);
       secondFloor = meansure();
       Serial.print("secondFloor = ");
       Serial.println(secondFloor);
       digitalWrite(LED2F, 0);
       digitalWrite(LED3F, 0);
     }
-    else if(mode == 2){
+    else if(mode >= 2){
       float m = meansure();
       Serial.print("Floor = ");
       Serial.println(m);
@@ -93,14 +100,19 @@ void loop() {
       int floor = int(gap) + ((gap - int(gap)) >= 0.5 ? 1 : 0);
       Serial.print("floor is:");
       Serial.println(floor);
-      digitalWrite(10 + floor, 1);
+      for(int i = 11; i <= 13; i++)
+        digitalWrite(10 + i, 0), delay(10);
+      delay(100);
+      for(int i = 1; i <= floor; i++)
+        digitalWrite(10 + i, 1);
     }
-    else{
-      digitalWrite(LED1F, 1);
-      digitalWrite(LED2F, 1);
-      digitalWrite(LED3F, 1);
-    }
-    mode = (mode + 1) % 4;
+      //else{
+      //      digitalWrite(LED1F, 1);
+      //      digitalWrite(LED2F, 1);
+      //      digitalWrite(LED3F, 1);
+      //    }
+      //mode = (mode + 1) % 4;
+      mode++;
     delay(1000);
   }
   delay(100);
