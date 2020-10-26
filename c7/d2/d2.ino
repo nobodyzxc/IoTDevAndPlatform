@@ -22,26 +22,21 @@ void printBest(){
 void loop() {
   int b = 0;
   brightness = -1;
-  while(1){
-    b = analogRead(A1);
-    delay(100);
-    Serial.println(b);
-  }
-  for (pos = 0; pos <= 180; pos += 1) {
+  for (pos = 0; pos <= 120; pos += 1) {
     b = analogRead(A0);
     Serial.println(b);
     if(b > brightness) brightness = b, bestAngle = pos, printBest();
     myservo.write(pos);
     delay(50);
   }
-  for (pos = 180; pos >= 0; pos -= 1) {
-    Serial.println(b);
-    b = analogRead(A0);
-    Serial.println(b);
-    if(b > brightness) brightness = b, bestAngle = pos, printBest();
-    myservo.write(pos);
-    delay(50);
-  }
+//  for (pos = 180; pos >= 0; pos -= 1) {
+//    Serial.println(b);
+//    b = analogRead(A0);
+//    Serial.println(b);
+//    if(b > brightness) brightness = b, bestAngle = pos, printBest();
+//    myservo.write(pos);
+//    delay(50);
+//  }
   myservo.write(bestAngle);
   delay(50);
   Serial.print("best angle:");
@@ -52,7 +47,7 @@ void loop() {
     delay(1000);
     b = analogRead(A0);
     int diff = abs(b - brightness);
-    if(diff > brightness / 3){
+    if(diff > brightness / 2){
       Serial.print("diff:");
       Serial.println(diff);
       Serial.print(" > ");
