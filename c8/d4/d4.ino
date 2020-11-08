@@ -18,6 +18,7 @@ void setup(){
   Wire.begin();
   Serial.begin(9600);
   Serial.println("Initializing I2C devices...");
+    mag.initialize();
   Serial.println(mag.testConnection() ?
       "HMC5883L connection successful":
       "HMC5883L connection failed");
@@ -33,9 +34,9 @@ float objdeg[2];
 long objdist[2];
 
 float caldist(long *dists, float *degs){
-  float theta = abs(degs[0] - degs[1]);
+  float theta = abs(degs[0] - degs[1]) * M_PI / 180;
   float a = (float)dists[0], b = (float)(dists[1]);
-  return pow(a, 2) + pow(b, 2) - 2 * a * b * cos(theta);
+  return sqrt(pow(a, 2) + pow(b, 2) - 2 * a * b * cos(theta));
 }
 
 void loop(){
@@ -46,9 +47,7 @@ void loop(){
     Serial.print("detect obj: ");
     Serial.println(obj);
 
-    mx = my = mz = 0;
     mag.getHeading(&mx, &my, &mz);
-
     Serial.print("mag:\t");
     Serial.print(mx); Serial.print("\t");
     Serial.print(my); Serial.print("\t");
