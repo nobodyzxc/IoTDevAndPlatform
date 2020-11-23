@@ -25,11 +25,11 @@ int melody[] = {
   NOTE_C4, NOTE_C4, NOTE_G4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_G4,
   NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_C4,
 
-  NOTE_G4, NOTE_G4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4,
-  NOTE_G4, NOTE_G4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4,
-
-  NOTE_C4, NOTE_C4, NOTE_G4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_G4,
-  NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_C4,
+//  NOTE_G4, NOTE_G4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4,
+//  NOTE_G4, NOTE_G4, NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4,
+//
+//  NOTE_C4, NOTE_C4, NOTE_G4, NOTE_G4, NOTE_A4, NOTE_A4, NOTE_G4,
+//  NOTE_F4, NOTE_F4, NOTE_E4, NOTE_E4, NOTE_D4, NOTE_D4, NOTE_C4,
 
 };
 
@@ -37,11 +37,11 @@ int noteDurations[] = {
   4, 4, 4, 4, 4, 4, 2,
   4, 4, 4, 4, 4, 4, 2,
 
-  4, 4, 4, 4, 4, 4, 2,
-  4, 4, 4, 4, 4, 4, 2,
-
-  4, 4, 4, 4, 4, 4, 2,
-  4, 4, 4, 4, 4, 4, 2,
+//  4, 4, 4, 4, 4, 4, 2,
+//  4, 4, 4, 4, 4, 4, 2,
+//
+//  4, 4, 4, 4, 4, 4, 2,
+//  4, 4, 4, 4, 4, 4, 2,
 };
 
 void setup() {
@@ -71,20 +71,20 @@ int getBPM(){
 }
 
 float BPM2rate(int bpm){
-  if(bpm < 100)
+  if(bpm < 70)
     return 1;
-  else if(bpm < 150)
+  else if(bpm < 80)
     return 1.5;
   else return 2;
 }
 
 void loop() {
+  int rate = BPM2rate(getBPM());
   for (int thisNote = 0; thisNote < sizeof(noteDurations) / sizeof(int); thisNote++) {
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
-    int pauseBetweenNotes = noteDuration * 1.30 / BPM2rate(getBPM());
+    int pauseBetweenNotes = noteDuration * 1.30 / rate;
     delay(pauseBetweenNotes);
     noTone(8);
   }
-  delay(20);
 }
